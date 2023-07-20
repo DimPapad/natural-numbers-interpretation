@@ -7,10 +7,10 @@ public abstract class PossibleOutput {
 
     private Queue<SequenceModel> possibleOutputs;
 
-    protected abstract Queue<SequenceModel> createAllPossibleCombinations(Queue<SequenceModel> outputs);
+    protected abstract Queue<SequenceModel> createAllPossibleCombinations(SequenceModel input);
 
-    public final void setPossibleOutputs(Queue<SequenceModel> outputs){
-        this.possibleOutputs=createAllPossibleCombinations(outputs);
+    public final void setPossibleOutputs(SequenceModel input){
+        this.possibleOutputs=createAllPossibleCombinations(input);
     }
 
 
