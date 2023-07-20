@@ -1,15 +1,17 @@
 package org.example.models;
 
+import lombok.Getter;
+
+@Getter
 public abstract class SequenceModel {
 
 
     private String value;
 
-    public abstract void checkValue();
+    protected abstract String checkValue(String value);
 
     public final void setValue(String value){
-        checkValue();
-        this.value=value;
+        this.value=checkValue(value);
     }
 
 
