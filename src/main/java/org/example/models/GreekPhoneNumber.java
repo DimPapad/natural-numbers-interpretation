@@ -1,10 +1,10 @@
 package org.example.models;
 
-import lombok.Setter;
+import lombok.Getter;
 import org.example.exceptions.WrongGreekPhoneNumberFormatException;
 
-@Setter
-public class GreekPhoneNumber {
+@Getter
+public class GreekPhoneNumber implements NoSpaceOutput{
 
     private String number;
 
@@ -26,15 +26,14 @@ public class GreekPhoneNumber {
                 throw new WrongGreekPhoneNumberFormatException("INVALID NUMBER. Wrong first/second digit of number.");
             }
         }
-        this.number=number;
+        this.number=removeSpaces(number);
     }
 
 
     @Override
-    public String toString() {
-        return "GreekPhoneNumber{" +
-                "number='" + number + '\'' +
-                '}';
+    public String removeSpaces(String value)
+    {
+        return value.replaceAll("\\s+", "");
     }
 
 

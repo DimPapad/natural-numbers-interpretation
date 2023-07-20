@@ -17,11 +17,11 @@ public class Main {
         Scanner sc=new Scanner(System.in);
         String input=sc.nextLine();
 
-        SequenceModel inputCheck=new GreekPhoneNumberInput();
-        inputCheck.setValue(input);
-        SequenceModel output=new NoSpaceOutput();
-        output.setValue(inputCheck.getValue());
-        System.out.println(output.getValue());
+//        SequenceModel inputCheck=new GreekPhoneNumberInput();
+//        inputCheck.setValue(input);
+//        SequenceModel output=new NoSpaceOutput();
+//        output.setValue(inputCheck.getValue());
+//        System.out.println(output.getValue());
 
     }
 

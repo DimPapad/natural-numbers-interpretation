@@ -1,12 +1,9 @@
 package org.example.models;
 
-public class NoSpaceOutput extends SequenceModel{
+public interface NoSpaceOutput{
 
 
-    @Override
-    protected String checkValue(String value) {
-        return value.replaceAll("\\s+", "");
-    }
+    String removeSpaces(String value);
 
 
 }
