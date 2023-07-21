@@ -1,9 +1,6 @@
 package org.example;
 
-import org.example.models.GreekPhoneNumber;
-import org.example.models.GreekPhoneNumberInput;
-import org.example.models.NoSpaceOutput;
-import org.example.models.SequenceModel;
+import org.example.models.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,14 +12,13 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
-        String input=sc.nextLine();
+        String initialInput=sc.nextLine();
 
-//        SequenceModel inputCheck=new GreekPhoneNumberInput();
-//        inputCheck.setValue(input);
-//        SequenceModel output=new NoSpaceOutput();
-//        output.setValue(inputCheck.getValue());
-//        System.out.println(output.getValue());
-
+        SequenceModel input=new GreekPhoneNumberInput();
+        input.setValue(initialInput);
+        Output output=new GreekPhoneNumberOutput();
+        output.setOutputs(input);
+        System.out.println(output.getOutputs());
     }
 
     
