@@ -1,7 +1,11 @@
 package org.example.models;
 
+import lombok.Getter;
+import lombok.ToString;
 import org.example.exceptions.WrongGreekPhoneNumberFormatException;
 
+@Getter
+@ToString
 public class GreekPhoneNumber extends OutputEntity implements NoSpaceOutput{
 
 
