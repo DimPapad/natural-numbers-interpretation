@@ -12,19 +12,16 @@ public class GreekPhoneNumberOutput extends Output{
         List<String> inputSubStrings=new ArrayList<>(Arrays.asList(input.getValue().split("\\s+")));
         List<List<String>> subStringsFromDivision=new ArrayList<>();
         List<List<String>> subStringsFromCombination=new ArrayList<>();
-        List<String> permutationsFromDivision=new ArrayList<>();
-        List<String> permutationsFromCombination=new ArrayList<>();
+        List<String> permutations=new ArrayList<>();
         List<OutputEntity> interpretations=new ArrayList<>();
 
         generateSubStringsFromDivision(inputSubStrings, subStringsFromDivision);
         generateSubStringsFromCombination(inputSubStrings, subStringsFromCombination);
+        List<List<String>> subStringsFromDivisionAndCombination=combineSubStringsFromDivisionAndCombination(subStringsFromDivision, subStringsFromCombination);
 
-        generatePermutations(subStringsFromDivision, permutationsFromDivision, 0, "");
-        generatePermutations(subStringsFromCombination, permutationsFromCombination, 0, "");
-        // COMMON PERMUTATIONS NEEDED
+        generatePermutations(subStringsFromDivisionAndCombination, permutations, 0, "");
 
-        generateGreekPhoneNumbersFromStrings(permutationsFromDivision,interpretations);
-        generateGreekPhoneNumbersFromStrings(permutationsFromCombination,interpretations);
+        generateGreekPhoneNumbersFromStrings(permutations,interpretations);
 
         return interpretations;
     }
@@ -64,13 +61,14 @@ public class GreekPhoneNumberOutput extends Output{
                     }
                     break;
                 case 3:
-                    if (subStrings.get(i).substring(1, 3).equals("00") && subStrings.get(i+1).length()==2) {
-                        subStringCombinations.add(subStrings.get(i));
-                        subStringCombinations.add(subStrings.get(i).substring(0,1));
-                    }
-                    else if (subStrings.get(i).substring(1, 3).equals("00") && subStrings.get(i+1).length()==1) {
-                        subStringCombinations.add(subStrings.get(i));
-                        subStringCombinations.add(subStrings.get(i).substring(0,2));
+                    if (subStrings.get(i).substring(1, 3).equals("00")) {
+                        if (subStrings.get(i + 1).length() == 2) {
+                            subStringCombinations.add(subStrings.get(i));
+                            subStringCombinations.add(subStrings.get(i).substring(0, 1));
+                        } else if (subStrings.get(i + 1).length() == 1) {
+                            subStringCombinations.add(subStrings.get(i));
+                            subStringCombinations.add(subStrings.get(i).substring(0, 2));
+                        }
                     }
                     else {
                         subStringCombinations.add(subStrings.get(i));
@@ -82,6 +80,17 @@ public class GreekPhoneNumberOutput extends Output{
             target.add(subStringCombinations);
         }
         target.add(new ArrayList<String>(Arrays.asList(subStrings.get(subStrings.size()-1))));
+    }
+
+    private List<List<String>> combineSubStringsFromDivisionAndCombination(List<List<String>> subStringsFromDivision, List<List<String>> subStringsFromCombination){
+        List<Set<String>> subStringsFromDivisionAndCombinationInSets = new ArrayList<>();
+        List<List<String>> subStringsFromDivisionAndCombinationInLists = new ArrayList<>();
+        for (int i = 0; i < subStringsFromDivision.size(); i++) {
+            subStringsFromDivisionAndCombinationInSets.add(new HashSet<>(subStringsFromDivision.get(i)));
+            subStringsFromDivisionAndCombinationInSets.get(i).addAll(subStringsFromCombination.get(i));
+            subStringsFromDivisionAndCombinationInLists.add(new ArrayList<>(subStringsFromDivisionAndCombinationInSets.get(i)));
+        }
+        return subStringsFromDivisionAndCombinationInLists;
     }
 
     private void generatePermutations(List<List<String>> lists, List<String> result, int depth, String current) {

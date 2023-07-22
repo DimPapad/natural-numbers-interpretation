@@ -11,9 +11,10 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Scanner sc=new Scanner(System.in);
-        String initialInput=sc.nextLine();
+//        Scanner sc=new Scanner(System.in);
+//        String initialInput=sc.nextLine();
 
+        String initialInput="0 0 30 69 700 24 1 3 50 2";
         SequenceModel input=new GreekPhoneNumberInput();
         input.setValue(initialInput);
         Output output=new GreekPhoneNumberOutput();
