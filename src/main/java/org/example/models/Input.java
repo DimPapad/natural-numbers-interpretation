@@ -3,7 +3,7 @@ package org.example.models;
 import lombok.Getter;
 
 @Getter
-public abstract class SequenceModel {
+public abstract class Input {
 
 
     private String value;

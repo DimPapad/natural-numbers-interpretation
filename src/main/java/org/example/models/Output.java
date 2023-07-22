@@ -1,22 +1,19 @@
 package org.example.models;
 
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.List;
-import java.util.Queue;
 
 @Getter
-@ToString
 public abstract class Output {
 
 
-    private List<OutputEntity> outputs;
+    private List<NumberEntity> outputs;
 
-    protected abstract List<OutputEntity> createAllValidOutputs(SequenceModel input);
+    protected abstract List<NumberEntity> createAllValidOutputs(Input input);
 
     public final void setOutputs(String userInput){
-        SequenceModel input=new GreekPhoneNumberInput();
+        Input input=new NumberInput();
         input.setValue(userInput);
         this.outputs=createAllValidOutputs(input);
     }

@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GreekPhoneNumberInput extends SequenceModel{
+public class NumberInput extends Input {
 
 
     @Override

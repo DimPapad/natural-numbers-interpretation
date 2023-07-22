@@ -8,7 +8,7 @@ public class GreekPhoneNumberOutput extends Output{
 
 
     @Override
-    protected List<OutputEntity> createAllValidOutputs(SequenceModel input) {
+    protected List<NumberEntity> createAllValidOutputs(Input input) {
         List<String> inputSubStrings=new ArrayList<>(Arrays.asList(input.getValue().split("\\s+")));
         List<List<String>> subStringsFromDivision=generateSubStringsFromDivision(inputSubStrings);
         List<List<String>> subStringsFromCombination=generateSubStringsFromCombination(inputSubStrings);
@@ -17,7 +17,7 @@ public class GreekPhoneNumberOutput extends Output{
         List<String> permutations=new ArrayList<>();
         generatePermutations(subStringsFromDivisionAndCombination, permutations, 0, "");
 
-        List<OutputEntity> interpretations=generateGreekPhoneNumbersFromStrings(permutations);
+        List<NumberEntity> interpretations=generateGreekPhoneNumbersFromStrings(permutations);
 
         return interpretations;
     }
@@ -29,14 +29,14 @@ public class GreekPhoneNumberOutput extends Output{
             subStringDivisions.add(subString);
             switch (subString.length()){
                 case 2:
-                    if (Integer.parseInt(subString)>=20 && !subString.substring(1, 2).equals("0")) {
-                        subStringDivisions.add(subString.substring(0, 1) + "0" + subString.substring(1, 2));
+                    if (Integer.parseInt(subString)>=20 && subString.charAt(1) != '0') {
+                        subStringDivisions.add(subString.charAt(0) + "0" + subString.charAt(1));
                     }
                     break;
                 case 3:
-                    subStringDivisions.add(subString.substring(0,1)+"00"+subString.substring(1,3));
-                    if (Integer.parseInt(subString.substring(1,3))>=20 && !subString.substring(2, 3).equals("0")) {
-                        subStringDivisions.add(subString.substring(0, 1) + "00" + subString.substring(1, 2)+ "0" + subString.substring(2,3));
+                    subStringDivisions.add(subString.charAt(0)+"00"+subString.substring(1,3));
+                    if (Integer.parseInt(subString.substring(1,3))>=20 && subString.charAt(2) != '0') {
+                        subStringDivisions.add(subString.charAt(0) + "00" + subString.charAt(1)+ "0" + subString.charAt(2));
                     }
                     break;
             }
@@ -51,7 +51,7 @@ public class GreekPhoneNumberOutput extends Output{
             List<String> subStringCombinations=new ArrayList<>();
             switch (subStrings.get(i).length()) {
                 case 2:
-                    if (Integer.parseInt(subStrings.get(i))>=20 && subStrings.get(i).substring(1, 2).equals("0") && subStrings.get(i+1).length()==1) {
+                    if (Integer.parseInt(subStrings.get(i))>=20 && subStrings.get(i).charAt(1) == '0' && subStrings.get(i+1).length()==1) {
                         subStringCombinations.add(subStrings.get(i));
                         subStringCombinations.add(subStrings.get(i).substring(0,1));
                     }
@@ -60,7 +60,7 @@ public class GreekPhoneNumberOutput extends Output{
                     }
                     break;
                 case 3:
-                    if (subStrings.get(i).substring(1, 3).equals("00")) {
+                    if (subStrings.get(i).startsWith("00", 1)) {
                         if (subStrings.get(i + 1).length() == 2) {
                             subStringCombinations.add(subStrings.get(i));
                             subStringCombinations.add(subStrings.get(i).substring(0, 1));
@@ -104,15 +104,18 @@ public class GreekPhoneNumberOutput extends Output{
         }
     }
 
-    private List<OutputEntity> generateGreekPhoneNumbersFromStrings(List<String> stringOutputs){
-        List<OutputEntity> interpretations=new ArrayList<>();
+    private List<NumberEntity> generateGreekPhoneNumbersFromStrings(List<String> stringOutputs){
+        List<NumberEntity> interpretations=new ArrayList<>();
         for (String stringOutput : stringOutputs) {
             try {
-                GreekPhoneNumber number=new GreekPhoneNumber();
-                number.setNumber(stringOutput);
-                interpretations.add(number);
+                GreekPhoneNumber greekPhoneNumber=new GreekPhoneNumber();
+                greekPhoneNumber.setNumber(stringOutput);
+                interpretations.add(greekPhoneNumber);
             } catch (WrongGreekPhoneNumberFormatException e){
-                e.printStackTrace();
+                NumberEntity.count.decrementAndGet();
+                SimpleNumber simpleNumber=new SimpleNumber();
+                simpleNumber.setNumber(stringOutput);
+                interpretations.add(simpleNumber);
             }
         }
         return interpretations;

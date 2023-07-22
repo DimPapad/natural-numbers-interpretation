@@ -1,6 +1,6 @@
 package org.example.models;
 
-public interface NoSpaceOutput{
+public interface NoSpace {
 
 
     String removeSpaces(String value);
