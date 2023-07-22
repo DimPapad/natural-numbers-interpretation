@@ -7,10 +7,10 @@ public class SimpleNumberOutput extends Output {
 
 
     @Override
-    protected List<NumberEntity> createAllValidOutputs(Input input) {
+    protected List<NumberEntity> createAllValidOutputs(String sequence) {
         List<NumberEntity> outputs=new ArrayList<>();
         SimpleNumber simpleNumber=new SimpleNumber();
-        simpleNumber.setNumber(input.getValue());
+        simpleNumber.setNumber(sequence);
         outputs.add(simpleNumber);
         return outputs;
     }

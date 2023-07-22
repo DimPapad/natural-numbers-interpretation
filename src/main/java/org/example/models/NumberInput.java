@@ -17,8 +17,8 @@ public class NumberInput extends Input {
                                                                 .stream()
                                                                 .filter(subString->subString.length()>3)
                                                                 .collect(Collectors.toList());
-        if (!subStringsWithMoreThanThreeDigits.isEmpty()){
-            throw new WrongInputException("The input sequence contains at least one number that has more than 3 digits.");
+        if (!subStringsWithMoreThanThreeDigits.isEmpty() || subStrings.size()==1){
+            throw new WrongInputException("The input sequence contains at least one number that has more than 3 digits. -OR- The sequence has not a space character.");
         }
         return sequence;
     }

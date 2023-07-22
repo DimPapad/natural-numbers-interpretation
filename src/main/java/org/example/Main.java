@@ -1,9 +1,6 @@
 package org.example;
 
 import org.example.clients.Client;
-import org.example.models.*;
-
-import java.util.List;
 
 public class Main {
 

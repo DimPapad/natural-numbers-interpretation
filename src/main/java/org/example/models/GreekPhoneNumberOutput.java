@@ -8,8 +8,8 @@ public class GreekPhoneNumberOutput extends Output{
 
 
     @Override
-    protected List<NumberEntity> createAllValidOutputs(Input input) {
-        List<String> inputSubStrings=new ArrayList<>(Arrays.asList(input.getValue().split("\\s+")));
+    protected List<NumberEntity> createAllValidOutputs(String sequence) {
+        List<String> inputSubStrings=new ArrayList<>(Arrays.asList(sequence.split("\\s+")));
         List<List<String>> subStringsFromDivision=generateSubStringsFromDivision(inputSubStrings);
         List<List<String>> subStringsFromCombination=generateSubStringsFromCombination(inputSubStrings);
         List<List<String>> subStringsFromDivisionAndCombination=combineSubStringsFromDivisionAndCombination(subStringsFromDivision, subStringsFromCombination);
