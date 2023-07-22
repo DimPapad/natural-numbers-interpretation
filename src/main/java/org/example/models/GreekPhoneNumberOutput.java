@@ -10,23 +10,20 @@ public class GreekPhoneNumberOutput extends Output{
     @Override
     protected List<OutputEntity> createAllValidOutputs(SequenceModel input) {
         List<String> inputSubStrings=new ArrayList<>(Arrays.asList(input.getValue().split("\\s+")));
-        List<List<String>> subStringsFromDivision=new ArrayList<>();
-        List<List<String>> subStringsFromCombination=new ArrayList<>();
-        List<String> permutations=new ArrayList<>();
-        List<OutputEntity> interpretations=new ArrayList<>();
-
-        generateSubStringsFromDivision(inputSubStrings, subStringsFromDivision);
-        generateSubStringsFromCombination(inputSubStrings, subStringsFromCombination);
+        List<List<String>> subStringsFromDivision=generateSubStringsFromDivision(inputSubStrings);
+        List<List<String>> subStringsFromCombination=generateSubStringsFromCombination(inputSubStrings);
         List<List<String>> subStringsFromDivisionAndCombination=combineSubStringsFromDivisionAndCombination(subStringsFromDivision, subStringsFromCombination);
 
+        List<String> permutations=new ArrayList<>();
         generatePermutations(subStringsFromDivisionAndCombination, permutations, 0, "");
 
-        generateGreekPhoneNumbersFromStrings(permutations,interpretations);
+        List<OutputEntity> interpretations=generateGreekPhoneNumbersFromStrings(permutations);
 
         return interpretations;
     }
 
-    private void generateSubStringsFromDivision(List<String> subStrings, List<List<String>> target){
+    private List<List<String>> generateSubStringsFromDivision(List<String> subStrings){
+        List<List<String>> subStringsFromDivision=new ArrayList<>();
         for (String subString : subStrings) {
             List<String> subStringDivisions=new ArrayList<>();
             subStringDivisions.add(subString);
@@ -43,11 +40,13 @@ public class GreekPhoneNumberOutput extends Output{
                     }
                     break;
             }
-            target.add(subStringDivisions);
+            subStringsFromDivision.add(subStringDivisions);
         }
+        return subStringsFromDivision;
     }
 
-    private void generateSubStringsFromCombination(List<String> subStrings, List<List<String>> target){
+    private List<List<String>> generateSubStringsFromCombination(List<String> subStrings){
+        List<List<String>> subStringsFromCombination=new ArrayList<>();
         for (int i = 0; i < subStrings.size()-1; i++) {
             List<String> subStringCombinations=new ArrayList<>();
             switch (subStrings.get(i).length()) {
@@ -77,9 +76,10 @@ public class GreekPhoneNumberOutput extends Output{
                 default:
                     subStringCombinations.add(subStrings.get(i));
             }
-            target.add(subStringCombinations);
+            subStringsFromCombination.add(subStringCombinations);
         }
-        target.add(new ArrayList<String>(Arrays.asList(subStrings.get(subStrings.size()-1))));
+        subStringsFromCombination.add(new ArrayList<String>(Arrays.asList(subStrings.get(subStrings.size()-1))));
+        return subStringsFromCombination;
     }
 
     private List<List<String>> combineSubStringsFromDivisionAndCombination(List<List<String>> subStringsFromDivision, List<List<String>> subStringsFromCombination){
@@ -104,16 +104,18 @@ public class GreekPhoneNumberOutput extends Output{
         }
     }
 
-    private void generateGreekPhoneNumbersFromStrings(List<String> stringOutputs, List<OutputEntity> target){
+    private List<OutputEntity> generateGreekPhoneNumbersFromStrings(List<String> stringOutputs){
+        List<OutputEntity> interpretations=new ArrayList<>();
         for (String stringOutput : stringOutputs) {
             try {
                 GreekPhoneNumber number=new GreekPhoneNumber();
                 number.setNumber(stringOutput);
-                target.add(number);
+                interpretations.add(number);
             } catch (WrongGreekPhoneNumberFormatException e){
                 e.printStackTrace();
             }
         }
+        return interpretations;
     }
 
 
