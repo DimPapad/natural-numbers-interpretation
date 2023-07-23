@@ -10,12 +10,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public abstract class NumberEntity {
 
 
-    protected static final AtomicInteger count = new AtomicInteger(-2);
+    protected static int count = -1;
     private final int serialNumber;
     private String number;
 
     public NumberEntity(){
-        serialNumber=count.incrementAndGet();
+        this.serialNumber=NumberEntity.count++;
     }
 
     @Override

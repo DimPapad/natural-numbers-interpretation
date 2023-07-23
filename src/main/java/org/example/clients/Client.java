@@ -12,7 +12,11 @@ public class Client {
 
     public void validateGreekPhoneNumberAndGetInterpretations() {
         // Input
-        System.out.println("Input a number");
+        System.out.println("""
+                Input a sequence by numbers.
+                Each number must consist of max 3 digits.
+                Sequence must have at least one space character.
+                """);
         Scanner sc = new Scanner(System.in);
         String userInput = sc.nextLine();
 
@@ -45,6 +49,7 @@ public class Client {
             greekPhoneNumber.setNumber(validInput);
             System.out.println(greekPhoneNumber.getNumber() + " [phone number: VALID]");
         } catch (WrongGreekPhoneNumberFormatException e) {
+            simpleNumber.setNumber(validInput);
             System.out.println(simpleNumber.getNumber() + " [phone number: INVALID]");
         }
 

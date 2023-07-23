@@ -3,8 +3,8 @@ package org.example.models;
 public class SimpleNumber extends NumberEntity implements NoSpace{
 
 
-    public void setNumber(Input input){
-        String number=removeSpaces(input.getValue());
+    public void setNumber(String validInput){
+        String number=removeSpaces(validInput);
         super.setNumber(number);
     }
 

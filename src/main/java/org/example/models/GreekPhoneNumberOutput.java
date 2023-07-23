@@ -8,7 +8,7 @@ public class GreekPhoneNumberOutput extends Output{
 
 
     @Override
-    protected List<NumberEntity> createAllValidOutputs(String sequence) {
+    protected List<NumberEntity> createAllOutputs(String sequence) {
         List<String> inputSubStrings=new ArrayList<>(Arrays.asList(sequence.split("\\s+")));
         List<List<String>> subStringsFromDivision=generateSubStringsFromDivision(inputSubStrings);
         List<List<String>> subStringsFromCombination=generateSubStringsFromCombination(inputSubStrings);
@@ -112,7 +112,7 @@ public class GreekPhoneNumberOutput extends Output{
                 greekPhoneNumber.setNumber(stringOutput);
                 interpretations.add(greekPhoneNumber);
             } catch (WrongGreekPhoneNumberFormatException e){
-                NumberEntity.count.decrementAndGet();
+                NumberEntity.count--;
                 SimpleNumber simpleNumber=new SimpleNumber();
                 simpleNumber.setNumber(stringOutput);
                 interpretations.add(simpleNumber);
