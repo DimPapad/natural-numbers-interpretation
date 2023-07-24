@@ -3,8 +3,6 @@ package org.example.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 @Getter
 @Setter
 public abstract class NumberEntity {
@@ -20,9 +18,9 @@ public abstract class NumberEntity {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer();
-        sb.append("Interpretation ").append(serialNumber).append(": ").append(number);
-        return sb.toString();
+        return "Interpretation " +
+                serialNumber + ": " +
+                number;
     }
 
 
