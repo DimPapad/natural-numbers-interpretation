@@ -12,10 +12,13 @@ public class GreekPhoneNumberTest {
     GreekPhoneNumber greekPhoneNumber=new GreekPhoneNumber();
 
     @Test
-    @DisplayName("Assert that a string sequence with spaces produces a solid number")
+    @DisplayName("Assert that a string sequence with spaces produces a solid valid greek phone number")
     public void assertGreekPhoneNumberProductionFromStringSequenceWithSpaces(){
         greekPhoneNumber.setNumber("694 89 31 00 8");
         String numberValue="6948931008";
+        Assertions.assertEquals(numberValue,greekPhoneNumber.getNumber());
+        greekPhoneNumber.setNumber("00 30 213 725 904 1");
+        numberValue="00302137259041";
         Assertions.assertEquals(numberValue,greekPhoneNumber.getNumber());
     }
 
